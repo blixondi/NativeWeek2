@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.Navigation
+import com.google.android.material.textfield.TextInputEditText
 
 
 class GameFragment : Fragment() {
@@ -20,17 +21,33 @@ class GameFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_game, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val txtTurn = view.findViewById<TextView>(R.id.txtTurn)
+        val txtQuestion = view.findViewById<TextView>(R.id.txtQuestion)
+        val txtAnswer = view.findViewById<TextInputEditText>(R.id.txtAnswer)
+        val btnSubmit = view.findViewById<Button>(R.id.btnSubmit)
         if(arguments != null){
             val playerName = GameFragmentArgs.fromBundle(requireArguments()).playerName
             txtTurn.text = "$playerName's Turn"
         }
-        val btnBack = view.findViewById<Button>(R.id.btnBack)
-        btnBack.setOnClickListener {
-            val action = GameFragmentDirections.actionMainFragment()
-            Navigation.findNavController(it).navigate(action)
+        var num1 = (1..100).random()
+        var num2 = (1..100).random()
+        var answer = num1 + num2
+        var score = 0
+        txtQuestion.text = "$num1 + $num2"
+        btnSubmit.setOnClickListener {
+            val playerAnswer = Integer.parseInt(txtAnswer.text.toString())
+            if(playerAnswer == answer){
+                score+=1
+                num1 = (1..100).random()
+                num2 = (1..100).random()
+                answer = num1 + num2
+                txtQuestion.text = "$num1 + $num2"
+                txtAnswer.text?.clear()
+            }
         }
+
     }
 }
