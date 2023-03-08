@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.navigation.Navigation
 
 
@@ -22,6 +23,11 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val btnBack = view.findViewById<Button>(R.id.btnBack)
+        val txtScore = view.findViewById<TextView>(R.id.txtScore)
+        if(arguments != null){
+            val finalScore = ResultFragmentArgs.fromBundle(requireArguments()).finalScore
+            txtScore.text = "Your score is $finalScore"
+        }
         btnBack.setOnClickListener {
             val action = ResultFragmentDirections.actionMainFragment()
             Navigation.findNavController(it).navigate(action)

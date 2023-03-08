@@ -46,6 +46,9 @@ class GameFragment : Fragment() {
                 answer = num1 + num2
                 txtQuestion.text = "$num1 + $num2"
                 txtAnswer.text?.clear()
+            } else {
+                val action = GameFragmentDirections.actionResultFragment(score)
+                Navigation.findNavController(it).navigate(action)
             }
         }
 
